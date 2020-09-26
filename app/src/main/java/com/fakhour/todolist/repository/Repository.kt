@@ -1,16 +1,13 @@
 package com.fakhour.todolist.repository
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.fakhour.todolist.api.RetrofitInstance
 import com.fakhour.todolist.database.TodoDatabase
-import com.fakhour.todolist.model.Post
 import com.fakhour.todolist.model.TaskModel
 import com.fakhour.todolist.model.UserModel
 import retrofit2.Response
-import java.util.*
 import java.util.concurrent.Executors
 
 
@@ -39,9 +36,7 @@ class Repository private constructor(context: Context) {
         return taskDao.getUserTasks(id)
     }
 
-    fun getAllTasks(): LiveData<List<TaskModel>> {
-        return taskDao.getAllTasks()
-    }
+
 
     suspend fun getUsers(): Response<List<UserModel>> {
 
@@ -62,7 +57,7 @@ class Repository private constructor(context: Context) {
         executor.execute {
 
             taskDao.insertUserTasks(response.body()!!)
-            Log.d("RESPONSEyy", "ererereer")
+
 
         }
 

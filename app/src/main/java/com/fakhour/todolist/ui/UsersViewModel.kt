@@ -12,9 +12,10 @@ import com.fakhour.todolist.utils.Network
 class UsersViewModel(private val repository: Repository) : ViewModel() {
     val myResponseUsers: MutableLiveData<Response<List<UserModel>>> = MutableLiveData()
 
+    // Tous les utilisateurs de la base de données
+    val usersListLiveData: LiveData<List<UserModel>> = repository.getUsersFromDb()
 
-    val UsersListLiveData: LiveData<List<UserModel>> = repository.getUsersFromDb()
-
+    // Tous les utilisateurs du web
     fun getUsers() {
 
         viewModelScope.launch {

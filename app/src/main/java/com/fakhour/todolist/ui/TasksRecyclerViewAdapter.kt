@@ -59,7 +59,7 @@ class TasksRecyclerViewAdapter(_context: Context, _tasksList: List<TaskModel>) :
             else{
                 cardView.setCardBackgroundColor(itemView.resources.getColor(R.color.colorFalse))
 
-                completedTV.text = "Incomplete Completed"
+                completedTV.text = "Incomplete Task"
 
 
             }

@@ -68,12 +68,14 @@ class TaskFragment : Fragment() {
 
         val repository = Repository.get()
         val viewModelFactory = TaskViewModelFactory(repository)
-        usernameTV.text=arguments?.getString(ARG_USERNAME)
-
         viewModel =
             ViewModelProvider(requireActivity(), viewModelFactory).get(TaskViewModel::class.java)
 
+        // Affichage du nom de l'utilisateur sur le haut de la page
+        usernameTV.text=arguments?.getString(ARG_USERNAME)
 
+
+        // ne lance la requete retrofit qu'en présence de connexion sinon utiliser la base de données
         if (Network.isNetworkConnected(requireContext())) {
 
         viewModel.getCustomTask(arguments!!.getInt(ARG_USER_ID))
@@ -86,10 +88,7 @@ class TaskFragment : Fragment() {
                 Log.d("RESPONSE", response.errorBody().toString())
 
             }
-
         })
-    } else {
-
     }
 
 
@@ -97,6 +96,7 @@ class TaskFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        // ne lance la requete retrofit qu'en présence de connexion sinon utiliser la base de données
         viewModel.getCustomTasksFromDb(arguments!!.getInt(ARG_USER_ID))
         viewModel.tasksListLiveData.observe(
             viewLifecycleOwner,
@@ -113,7 +113,7 @@ class TaskFragment : Fragment() {
 
     }
 
-    fun setUpTaskRecyclerView(tasks: List<TaskModel>) {
+    private fun setUpTaskRecyclerView(tasks: List<TaskModel>) {
         val taskRecyclerViewAdapter = TasksRecyclerViewAdapter(requireContext(), tasks)
         recyclerView.adapter = taskRecyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
